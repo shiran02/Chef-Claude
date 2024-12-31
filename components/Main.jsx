@@ -7,6 +7,18 @@ export default function Main(){
     const [ingredients,setIngredients] = React.useState(['tomato','asd','tomato','asd','erer']);
     const [recipeShown,setRecipeShown] = React.useState(false);
 
+
+    const [recipe ,setReipe]  = React.useState("")
+    const recipeSection = React.useRef(null)
+
+    console.log(recipeSection)
+
+    React.useEffect(()=>{
+        if(recipe !=="" && recipeSection.current !== null){
+            recipeSection.current.scrollInToView()
+        }
+    },[recipe])
+
     function toggleRecipeShown(){
         setRecipeShown(prevShown=>!prevShown)
     }
@@ -41,6 +53,7 @@ export default function Main(){
         <main>
             <form className="add-ingredient-form" action={addIngredient}>
                 <input
+                    ref={recipeSection}
                     type="text"
                     placeholder="e.g. oregano"
                     aria-label="Add ingredient"
@@ -53,7 +66,7 @@ export default function Main(){
             
             ingredients.length > 0 ? 
                     
-                 <IngredientsList toggleRecipeShown={toggleRecipeShown}  ingredients={ingredients}/>   : null
+                 <IngredientsList ref={recipeSection} toggleRecipeShown={toggleRecipeShown}  ingredients={ingredients}/>   : null
             }
 
             {recipeShown ? <ClaudeRecipe/>
